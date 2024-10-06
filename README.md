@@ -42,5 +42,5 @@ Bu proje, Kafka kullanarak mesaj üreten bir **producer** ve bu mesajları alıp
    Dockerfile ve Compose dosyalarımı kullanarak projeyi image haline getirdim ve container'da ayağa kaldırdım. Projeyi çalıştırmak için aşağıdaki komutu kullandım:
    ```bash
     docker-compose up --build
-Sonuç
+Sonuç:
 Bu uygulama, Kafka üzerinden alınan mesajları PostgreSQL veritabanında başarıyla saklamaktadır. Proje, Docker kullanarak container ortamında sorunsuz bir şekilde çalıştırıldı.
