@@ -14,9 +14,7 @@
     </properties>
 
     <dependencies>
-        <!-- Diğer bağımlılıklar -->
-    
-        <!-- JUnit Bağımlılığı -->
+       
         <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
