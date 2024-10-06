@@ -1,40 +1,46 @@
-Bu projemde kafka kullanarak üretilen mesajları postgresql de kaydeden bir java uygulaması yaptım 
-Kafka producer mesajları gönderir kafka consumer ise bu mesajları alır ve postgresql veritabanına kaydeder
+# Kafka ve PostgreSQL ile Mesaj Saklama Java Uygulaması
 
-ilk olarak maven projesi oluşturdum 
-mvn archetype:generate -DgroupId=com.example -DartifactId=kafka-postgres-example -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-Bu komut projenin dosya dizinini oluşturdu ve gerekli bağımlılıklarını pom.xml dosyasının içine yazdım 
+Bu proje, Kafka kullanarak mesaj üreten bir **producer** ve bu mesajları alıp PostgreSQL veritabanına kaydeden bir **consumer** içeren bir Java uygulamasıdır. Mesajlar, Kafka üzerinden üretilir ve PostgreSQL veritabanında saklanır. Aşağıda, projeyi oluşturmak için izlenen adımlar yer almaktadır.
 
-postgresql i ubuntu üzerinde kurmak için sırasıyla 
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-kodlarını yazdım 
+## Adımlar:
 
-Kafkadan alınan verilerin saklanabilmesi için bir veritabanı ve kullanıcı oluşturdum 
-sudo -i -u postgres
-psql ile terminal ekranına eriştim 
+1. **Maven Projesi Oluşturma**:
+   İlk olarak Maven ile bir proje oluşturuldu. Projeyi başlatmak için şu komut kullanıldı:
+   ```bash
+   mvn archetype:generate -DgroupId=com.example -DartifactId=kafka-postgres-example -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+2. **PostgreSQL Kurulumu (Ubuntu)**:
+   PostgreSQL'i Ubuntu üzerinde kurmak için aşağıdaki adımları izledim:
+   ```bash
+   sudo apt update
+   sudo apt install postgresql postgresql-contrib
+  Ardından, PostgreSQL terminaline geçerek veritabanı ve kullanıcı oluşturmak için şu komutları kullandım:
+  
+    sudo -i -u postgres
+    psql
+    CREATE USER youruser WITH PASSWORD 'password';
+    CREATE DATABASE deneme_database;
+    GRANT ALL PRIVILEGES ON DATABASE deneme_database TO youruser;
+3. **Kafka Kurulumu**:
+   Kafka'yı kurmak için doğrudan indirme linkini vererek indirmesini sağladım:
+   ```bash
+   wget https://downloads.apache.org/kafka/3.1.0/kafka_2.13-3.1.0.tgz
+(Sürümlerde adres değişiklik gösterebilir.) İndirdiğim dosyayı arşivden çıkarmak için aşağıdaki komutu çalıştırdım:
 
-Veritabanı ve kullanıcı oluşturmak için 
-CREATE USER youruser WITH PASSWORD 'password';
-CREATE DATABASE deneme_database;
-GRANT ALL PRIVILEGES ON DATABASE kafka_db TO youruser;
-sırasıyla bu komutları kendime göre doldurdum 	
-
-Kafka yı kurmak için direk indirme linki vererek indirmesini sağladım 
-
-wget https://downloads.apache.org/kafka/3.1.0/kafka_2.13-3.1.0.tgz
-(sürümlerde adres değişiklik gösterebilir)
-indirdiğim dosyayı arşivden çıkarmak için aşağıdaki komutu çalıştırdım
-tar -xzf kafka_2.13-3.1.0.tgz
-mv kafka_2.13-3.1.0 kafka
-
-Daha sonrasında kafka ya mesaj gönderen producer ve mesajalrı alıp postgresql e kaydetmesini sağlayan consumer adlı java dosyalarını ayarladım. Sırasıyla producer ve consumer dosyalarını çalıştırdım 
-mvn exec:java -Dexec.mainClass="com.example.Producer"
-
-mvn exec:java -Dexec.mainClass="com.example.Consumer"
-
-SELECT * FROM kafka_data;
-en son postgresql terminalinde kaydedildiğini kontrol ettim 
-
-Dockerfile ve compose dosyalarımı kullanarak projeyi image haline getirdim ve container da ayağa kaldırdım 
-
+    tar -xzf kafka_2.13-3.1.0.tgz
+    mv kafka_2.13-3.1.0 kafka
+4. **Producer ve Consumer Oluşturma**:
+   Daha sonrasında, Kafka'ya mesaj gönderen Producer ve mesajları alıp PostgreSQL'e kaydeden Consumer adlı Java dosyalarını ayarladım. Producer ve Consumer dosyalarını çalıştırmak için şu komutları sırasıyla kullandım:
+   ```bash
+   mvn exec:java -Dexec.mainClass="com.example.Producer"
+   mvn exec:java -Dexec.mainClass="com.example.Consumer"
+5. **Verilerin Kontrolü**:
+   Son olarak, PostgreSQL terminalinde kaydedilen verileri kontrol etmek için şu SQL komutunu kullandım:
+   ```bash 
+    sql
+    SELECT * FROM kafka_data;
+6. **Docker ile Projeyi Çalıştırma**:
+   Dockerfile ve Compose dosyalarımı kullanarak projeyi image haline getirdim ve container'da ayağa kaldırdım. Projeyi çalıştırmak için aşağıdaki komutu kullandım:
+   ```bash
+    docker-compose up --build
+Sonuç
+Bu uygulama, Kafka üzerinden alınan mesajları PostgreSQL veritabanında başarıyla saklamaktadır. Proje, Docker kullanarak container ortamında sorunsuz bir şekilde çalıştırıldı.
