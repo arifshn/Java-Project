@@ -5,7 +5,7 @@ Bu proje, Kafka kullanarak mesaj üreten bir **producer** ve bu mesajları alıp
 ## Adımlar:
 
 1. **Maven Projesi Oluşturma**:
-   İlk olarak Maven ile bir proje oluşturuldu. Projeyi başlatmak için şu komut kullanıldı:
+   İlk olarak Maven ile bir proje oluşturdum. Projeyi başlatmak için şu komutu kullandım:
    ```bash
    mvn archetype:generate -DgroupId=com.example -DartifactId=kafka-postgres-example -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 2. **PostgreSQL Kurulumu (Ubuntu)**:
